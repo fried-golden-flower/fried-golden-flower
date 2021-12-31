@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/js/jquery-2.1.4.min.js}"></script>
+    <script src="js/poker.min.js"></script>
+    <style>
+        .input-cart-number {
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+            margin-right: 8px;
+
+            /* &:last-child {
+              margin-right: 0;
+            } */
+        }
+        .input-button-number{
+            width: 100px;
+            height: 50px;
+            background-color: #FFFF37;
+            margin-right: 30px;
+        }
+    </style>
+</head>
+
+<body>
+<b><span id="total">我的积分:<span/><br/><br/><br/>
+    <button style="width: 100px;height: 50px" id="create-hourse" onclick="createHourse()">创建房间</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br>
+    <br/><br/>
+    <button style="width: 100px;height: 50px" id="join-hourse" onclick="joinHourse()">加入房间</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <form id="ch-ff" action="@{/hourse/createHourse}">
+    </form>
+    <form id="jh-ff" action="@{/hourse/joinHourse}">
+    </form>
+
+    <div id="my_modal" style="border: 1px solid #000;position: fixed;top: 50%;left: 50%;transform: translate(-50%,-50%); display: none;">
+        <form class="form" autocomplete="off" novalidate>
+            <center>
+            <fieldset>
+                <label for="card-number">请输入六位数房间号</label>  <button class="my_close" onclick="close()" style="float:right;">关闭</button>
+                <br/><br/>
+                <input type="num" id="card-number" class="input-cart-number card-1" maxlength="1" />
+                <input type="num" id="card-number-1" class="input-cart-number card-2" maxlength="1" />
+                <input type="num" id="card-number-2" class="input-cart-number card-3" maxlength="1" />
+                <input type="num" id="card-number-3" class="input-cart-number card-4" maxlength="1" />
+                <input type="num" id="card-number-4" class="input-cart-number card-5" maxlength="1" />
+                <input type="num" id="card-number-5" class="input-cart-number card-6" maxlength="1" />
+                <br/><br/>
+                <input type="button" value="1" class="input-button-number card-1"/>
+                <input type="button" value="2" class="input-button-number card-2"/>
+                <input type="button" value="3" class="input-button-number card-3"/>
+                <br/>
+                <input type="button" value="4" class="input-button-number card-4"/>
+                <input type="button" value="5" class="input-button-number card-5"/>
+                <input type="button" value="6" class="input-button-number card-6"/>
+                <br/>
+                <input type="button" value="7" class="input-button-number card-7"/>
+                <input type="button" value="8" class="input-button-number card-8"/>
+                <input type="button" value="9" class="input-button-number card-9"/>
+                <br/>
+                <input type="button" value="清除" class="input-button-number card-7"/>
+                <input type="button" value="0" class="input-button-number card-8"/>
+                <input type="button" value="<-" class="input-button-number card-9"/>
+            </fieldset>
+            </center>
+        </form>
+    </div>
+    <script>
+        //获取弹窗my_
+        let myModal= document.getElementById('my_modal')
+        let myClose=document.getElementsByClassName('my_close')[0]
+        console.log(myClose);
+        function createHourse() {
+            $("#ch-ff").submit();
+        }
+        function joinHourse() {
+            //加入房间 弹出框
+            myModal.style.display='block'
+        }
+        //关闭弹窗
+        myClose.onclick = function(){
+            myModal.style.display="none"
+        }
+        function openwindow(url,name,iWidth,iHeight)
+        {
+            var url;                            //转向网页的地址;
+            var name;                           //网页名称，可为空;
+            var iWidth;                         //弹出窗口的宽度;
+            var iHeight;                        //弹出窗口的高度;
+            //window.screen.height获得屏幕的高，window.screen.width获得屏幕的宽
+            var iTop = (window.screen.height-30-iHeight)/2;       //获得窗口的垂直位置;
+            var iLeft = (window.screen.width-10-iWidth)/2;        //获得窗口的水平位置;
+            console.log(iTop+","+iLeft)
+            window.open(url,name,'height='+iHeight+',,innerHeight='+iHeight+',width='+iWidth+',innerWidth='+iWidth+',top='+iTop+',left='+iLeft+',toolbar=no,menubar=no,scrollbars=auto,resizeable=no,location=no,status=no');
+        }
+
+        // 获取input元素
+        var ele = document.documentElement.querySelectorAll('.input-cart-number');
+        // 变量来控制光标在哪个input框
+        let focusIdx = 0;
+
+        // 初始化 自动定位第一个框
+        window.onload = function() {
+            let focusIdx = 0;
+            ele[focusIdx].focus()
+        }
+
+        // 为每一个元素添加监听事件
+        ele.forEach((e) => {
+            e.addEventListener('keyup', function(e) {
+                const len = e.target.value.toString();
+                // 判断当前输入值的长度 等于1
+                // 光标滑动到下一个元素
+                if(len >= 1) {
+                    focusIdx += 1; // focusIdx = focusIdx + 1
+                    ele[focusIdx].focus() // 移动光标的方法
+                }
+
+                // 监听 回退键 事件
+                if(e.keyCode === 8) {
+                    focusIdx -= 1
+                    ele[focusIdx].focus()
+                }
+            })
+
+        })
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.friedgoldenflower.infra.mapper.UserMapper">
+    <sql id="queryFields">
+        id,user_name,email,cur_hourse,hourse_card
+    </sql>
+    <sql id="insertFields">
+        user_name,password,email,cur_hourse,hourse_card
+    </sql>
+    <insert id="insertUser">
+        insert into user(<include refid="insertFields"></include>)
+        values(#{userName},#{password},#{email},null,0)
+    </insert>
+    <select id="selectUser" resultType="com.example.friedgoldenflower.domain.entity.User"
+            parameterType="com.example.friedgoldenflower.api.dto.UserDTO">
+        select <include refid="queryFields"></include>
+        from user u
+        <where>
+            <if test="email!=null and email!=''">
+                and u.email = #{email}
+            </if>
+            <if test="userName!=null and userName!=''">
+                and u.user_name = #{userName}
+            </if>
+            <if test="password!=null and password!=''">
+                and u.password = #{password}
+            </if>
+        </where>
+    </select>
+    <select id="login" resultType="com.example.friedgoldenflower.domain.entity.User"
+            parameterType="com.example.friedgoldenflower.api.dto.UserDTO">
+        select <include refid="queryFields"></include>
+            from user u
+        <where>
+            <!-- 可以使用用户名或者邮箱登录 -->
+            <if test="userName!=null and userName!=''">
+                and (u.user_name = #{userName} or u.email = #{userName})
+            </if>
+            <if test="password!=null and password!=''">
+                and u.password = #{password}
+            </if>
+        </where>
+    </select>
+
+</mapper>

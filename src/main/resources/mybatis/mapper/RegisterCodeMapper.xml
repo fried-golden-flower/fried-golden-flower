@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.friedgoldenflower.infra.mapper.RegisterCodeMapper">
+    <sql id="queryFields">
+        id,email,code,create_time
+    </sql>
+    <sql id="insertFields">
+        last_name,email,gender,d_id,birth,username,password
+    </sql>
+
+    <insert id="save" parameterType="RegisterCode">
+        insert into register_code(email,code,create_time) values(#{email},#{code},#{createTime})
+    </insert>
+    <delete id="deleteRegisterCodeByEmail">
+        delete from register_code where email=#{email}
+    </delete>
+    <select id="selectRegisterCodeByEmail"
+            resultType="com.example.friedgoldenflower.domain.entity.RegisterCode">
+        select <include refid="queryFields"></include>
+            from register_code rc
+            <where>
+                <if test="email!=null and email!=''">
+                    and rc.email = #{email}
+                </if>
+            </where>
+    </select>
+
+
+</mapper>

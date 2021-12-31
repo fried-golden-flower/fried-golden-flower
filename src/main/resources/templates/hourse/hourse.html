@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>游戏房间[[result.hourseCode]]</title>
+    <script th:src="@{/js/jquery-2.1.4.min.js}"></script>
+    <script src="@{js/poker.min.js}"></script>
+</head>
+<body>
+    <b><span id="total">我的积分:<span/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button onclick="start()">开始</button>
+    <br/><br/>
+
+    <div id="container4">
+    </div>
+    <script>
+         function createPlayers(players) {
+             console.log(players.length);
+             for(var i=0;i<players.length;i++){
+                 console.log(players.length);
+                 var container4 = document.getElementById("container4");
+                 var h1 = document.createElement("h5");
+                 h1.innerText="玩家"+(i+1)+"";
+                 h1.className = "player";
+                 switch(players[i].type){
+                     case 0:
+                         h1.innerText+="    普通牌";break;
+                     case 1:
+                         h1.innerText+="    对子";break;
+                     case 2:
+                         h1.innerText+="    顺子";break;
+                     case 3:
+                         h1.innerText+="    同花";break;
+                     case 4:
+                         h1.innerText+="    同花顺";break;
+                     case 5:
+                         h1.innerText+="    炸弹";break;
+                 }
+                 container4.appendChild(h1);
+                 var cards = players[i].cards;
+                 console.log(cards.length);
+                 for(var j=0;j<cards.length;j++){
+                     var flower;
+                     switch (cards[j].flower) {
+                         case 1: //梅花
+                             flower = "clubs";break;
+                         case 2: //红桃
+                             flower = "hearts";break;
+                         case 3: //黑桃
+                             flower = "spades";break;
+                         case 0: //方片
+                             flower = "diamonds";break;
+                     }
+                     var number="";
+                     console.log("parseInt(cards[j].number):"+parseInt(cards[j].number));
+                     if (parseInt(cards[j].number) <= 10) {
+                         number = "" + cards[j].number;
+                     } else if (parseInt(cards[j].number) == 11) {
+                         number = "j";
+                     } else if (parseInt(cards[j].number) == 12) {
+                         number = "q";
+                     } else if (parseInt(cards[j].number) == 13) {
+                         number = "k";
+                     } else {
+                         number = "a";
+                     }
+                     container4.appendChild(Poker.getCardImage(60,flower,number));
+                 }
+             }
+         }
+        function start() {
+            console.log($(".player").size());
+            $.ajax({
+                url:"http://localhost:8080/zjh/demo",
+                type:"get",
+                data:{count:$(".player").size()},
+                dataType:"json",
+                success: function (data,textStatus) {
+                    console.log(data);
+                    createPlayers(data);
+                }
+            });
+        }
+
+        for (var i=0;i<10;i++){
+            var container4 = document.getElementById("container4");
+            var h1 = document.createElement("h5");
+            h1.innerText="玩家"+i+"";
+            h1.className = "player";
+            container4.appendChild(h1);
+        }
+    </script>
+
+</body>
+</html>

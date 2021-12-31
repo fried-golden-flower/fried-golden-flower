@@ -1,0 +1,53 @@
+spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+  mvc:
+    static-path-pattern: /**
+  web:
+    resources:
+      static-locations: classpath:/
+  mail:
+    username: 320602563@qq.com
+    password: hgnpzqtduhydbggj
+    host: smtp.qq.com
+    properties:
+      mail:
+        smtp:
+          auth: true
+    port: 587
+  datasource:
+    username: root
+    password: dragon
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/fried_golden_flower?serverTimezone=GMT%2B8
+    type: com.alibaba.druid.pool.DruidDataSource
+    #    数据源其他配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall      #,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+server:
+  port: 8080
+  servlet:
+    context-path: /zjh
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations:
+    - classpath:mybatis/mapper/*.xml

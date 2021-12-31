@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/js/jquery-easyui-1.10.1/themes/default/easyui.css}" href="js/jquery-easyui-1.10.1/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/js/jquery-easyui-1.10.1/themes/icon.css}" href="js/jquery-easyui-1.10.1/themes/icon.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/js/jquery-easyui-1.10.1/demo/demo.css}" href="js/jquery-easyui-1.10.1/demo/demo.css">
+    <script type="text/javascript" th:src="@{/js/jquery-easyui-1.10.1/jquery.min.js}" src="js/jquery-easyui-1.10.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-easyui-1.10.1/jquery.easyui.min.js}" src="js/jquery-easyui-1.10.1/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/customprompt.js}" src="js/customprompt.js"></script>
+    <style>
+        .alert-pormpt{//自定义提示框样式
+        background:rgba(0,0,0,0.8);
+            color:#fff;
+        }
+    </style>
+</head>
+<body>
+    <div style="top: 0;bottom: 0;left: 0;right: 0;width:400px; margin: auto;height: 500px;position: absolute;">
+        <h2>体验游戏账号注册</h2>
+        <div style="margin:20px 0;"></div>
+        <div class="easyui-panel" title="信息" style="width:100%;max-width:400px;padding:30px 60px;">
+        <form id="ff" method="post" th:action="@{/user/register}">
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="userName" style="width:100%" data-options="label:'用户名',required:true">
+            </div>
+            <div style="margin-bottom:20px">
+                <input id="pass" name="password" class="easyui-passwordbox" prompt="密码" iconWidth="28" style="width:100%;height:34px;padding:10px">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-passwordbox" name="password2" prompt="确认密码" iconWidth="28" validType="confirmPass['#pass']" style="width:100%;height:34px;padding:10px">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="email" style="width:100%" data-options="label:'邮箱:',required:true,validType:'email'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="subject" style="width:62%" data-options="label:'验证码:',required:true">
+                <a id="send-code" href="javascript:void(0)" class="easyui-linkbutton" onclick="sendEmailCode()" style="width:100px">获取验证码</a>
+            </div>
+        </form>
+        <div style="text-align:center;padding:5px 0">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">注册</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">清除</a>
+        </div>
+    </div>
+    </div>
+    <script>
+        var result = [[${result}]]
+        console.log(result);
+        if(result.success==true){
+            success_prompt(result.content);
+        }else{
+            warning_prompt(result.content);
+        }
+        $.extend($.fn.validatebox.defaults.rules, {
+            confirmPass: {
+                validator: function(value, param){
+                    var pass = $(param[0]).passwordbox('getValue');
+                    return value == pass;
+                },
+                message: '密码与确认密码不匹配'
+            }
+        });
+        function submitForm(){
+            var userName = $("[name='userName']").attr("value");
+            var password = $("[name='password']").attr("value");
+            var password2 = $("[name='password2']").attr("value");
+            var email = $("[name='email']").attr("value");
+            var subject = $("[name='subject']").attr("value");
+            console.log(userName+','+password+','+password2+','+email+','+subject)
+            if($.trim(userName)==''){
+                warning_prompt("请输入用户名");
+                return;
+            }
+            if ($.trim(password)==''){
+                warning_prompt('请输入密码');
+                return;
+            }
+            if($.trim(password2)==''){
+                warning_prompt('请输入确认密码');
+                return;
+            }
+            if ($.trim(email)==''){
+                warning_prompt('请输入密码');
+                return;
+            }
+            if ($.trim(subject)==''){
+                warning_prompt('请输入验证码');
+                return;
+            }
+            if ($.trim(password)!=$.trim(password2)){
+                warning_prompt('两次密码不一致');
+                return;
+            }
+            $('#ff').submit();
+        }
+        function clearForm(){
+            $('#ff').form('clear');
+        }
+        function sendEmailCode() {
+            var email = $("[name='email']").attr("value");
+            var userName = $("[name='userName']").attr("value");
+            if(email==''){
+                warning_prompt('请输入需要发送的邮箱');
+                return;
+            }
+            if(userName==''){
+                warning_prompt('请输入用户名');
+                return;
+            }
+            //794530831@qq.com
+            var data = {
+                email:email,
+                userName:userName
+            };
+            $.ajax({
+                url:"http://localhost:8080/zjh/user/sendEmailCode",
+                contentType:"application/json;charset=utf-8",
+                type:"post",
+                dataType:"text",
+                data:JSON.stringify(data),
+                success: function (data,textStatus) {
+                    console.log(data);
+                    data = JSON.parse(data);
+                    if(data.success==true){
+                        success_prompt(data.content);
+                    }else{
+                        warning_prompt(data.content);
+                    }
+                    //10秒后重新发送
+                    settime($("#send-code"),10);
+                }
+            });
+        }
+        function settime($obj, time) {
+            if (time == 0) {
+                $obj.attr("disabled", false);
+                $obj.text("获取验证码");
+                return;
+            } else {
+                $obj.attr("disabled", true);
+                $obj.text("重新发送(" + time + ")");
+                time--;
+            }
+            setTimeout(function () { settime($obj, time) }, 1000)
+        }
+    </script>
+    </body>
+</html>

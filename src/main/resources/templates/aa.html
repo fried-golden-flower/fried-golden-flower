@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>输入六位数房间号</title>
+    <style>
+        .input-cart-number {
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+            margin-right: 8px;
+
+            /* &:last-child {
+              margin-right: 0;
+            } */
+        }
+        .input-button-number{
+            width: 100px;
+            height: 50px;
+            background-color: #FFFF37;
+            margin-right: 30px;
+        }
+    </style>
+</head>
+<body>
+<div style="top: 0;bottom: 0;left: 0;right: 0;width:480px; margin: auto;height: 400px;position: absolute;">
+<form class="form" autocomplete="off" novalidate>
+    <center>
+    <fieldset>
+        <label for="card-number">请输入六位数房间号</label>
+        <br/><br/>
+        <input type="num" id="card-number" class="input-cart-number card-1" maxlength="1" />
+        <input type="num" id="card-number-1" class="input-cart-number card-2" maxlength="1" />
+        <input type="num" id="card-number-2" class="input-cart-number card-3" maxlength="1" />
+        <input type="num" id="card-number-3" class="input-cart-number card-4" maxlength="1" />
+        <input type="num" id="card-number-4" class="input-cart-number card-5" maxlength="1" />
+        <input type="num" id="card-number-5" class="input-cart-number card-6" maxlength="1" />
+        <br/><br/>
+        <input type="button" value="1" class="input-button-number card-1"/>
+        <input type="button" value="2" class="input-button-number card-2"/>
+        <input type="button" value="3" class="input-button-number card-3"/>
+        <br/>
+        <input type="button" value="4" class="input-button-number card-4"/>
+        <input type="button" value="5" class="input-button-number card-5"/>
+        <input type="button" value="6" class="input-button-number card-6"/>
+        <br/>
+        <input type="button" value="7" class="input-button-number card-7"/>
+        <input type="button" value="8" class="input-button-number card-8"/>
+        <input type="button" value="9" class="input-button-number card-9"/>
+        <br/>
+        <input type="button" value="清除" class="input-button-number card-7"/>
+        <input type="button" value="0" class="input-button-number card-8"/>
+        <input type="button" value="<-" class="input-button-number card-9"/>
+    </fieldset>
+    </center>
+</form>
+</div>
+</body>
+<script>
+    // 获取input元素
+    var ele = document.documentElement.querySelectorAll('.input-cart-number');
+    // 变量来控制光标在哪个input框
+    let focusIdx = 0;
+
+    // 初始化 自动定位第一个框
+    window.onload = function() {
+        let focusIdx = 0;
+        ele[focusIdx].focus()
+    }
+
+    // 为每一个元素添加监听事件
+    ele.forEach((e) => {
+        e.addEventListener('keyup', function(e) {
+            const len = e.target.value.toString();
+            // 判断当前输入值的长度 等于1
+            // 光标滑动到下一个元素
+            if(len >= 1) {
+                focusIdx += 1; // focusIdx = focusIdx + 1
+                ele[focusIdx].focus() // 移动光标的方法
+            }
+
+            // 监听 回退键 事件
+            if(e.keyCode === 8) {
+                focusIdx -= 1
+                ele[focusIdx].focus()
+            }
+        })
+
+    })
+
+</script>
+</html>
