@@ -21,12 +21,13 @@ public class HourseServiceImpl implements HourseService {
     @Transactional(rollbackFor = Exception.class)
     public Hourse createHourse(User user) {
         Hourse hourse = new Hourse();
-        hourse.setHourseName(user.getUserName()+"创建的房间");
-        hourse.setHourseCode(HourseCodeUtils.getHourseCode(new Object()));
+        hourse.setHourseName(user.getUserName() + "创建的房间");
+        hourse.setHourseCode(HourseCodeUtils.getHourseCode("-1"));
         hourse.setCreateTime(new Date());
         hourse.setCreateUser(user.getId());
-        hourse.setHourseUser(user.getId()+"");
-//        hourseRespository.save(hourse);
-        return null;
+        hourse.setHourseUser(user.getId() + "");
+        hourseRespository.createHourse(hourse);
+        HourseCodeUtils.put(hourse.getHourseCode(), hourse.getId());
+        return hourse;
     }
 }

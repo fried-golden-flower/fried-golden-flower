@@ -13,7 +13,7 @@ public class HourseRespositoryImpl implements HourseRespository {
     private HourseMapper hourseMapper;
 
     @Override
-    public Hourse createHourse(Hourse hourse) {
+    public Integer createHourse(Hourse hourse) {
         return hourseMapper.createHourse(hourse);
     }
 }

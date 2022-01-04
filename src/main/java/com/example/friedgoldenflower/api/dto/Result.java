@@ -13,4 +13,11 @@ public class Result {
      */
     private Object content;
 
+    @Override
+    public String toString() {
+        return "{" +
+                "success:" + success +
+                ", content:" + content +
+                "}";
+    }
 }

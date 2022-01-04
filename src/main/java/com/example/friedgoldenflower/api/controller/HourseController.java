@@ -26,7 +26,7 @@ public class HourseController {
      */
     @GetMapping("/createHourse")
     public String createHourse(HourseDTO hourseDTO, HttpServletRequest request){
-        User cur = (User) request.getSession().getAttribute("user");
+        User cur = (User) request.getSession().getAttribute("loginUser");
         hourseService.createHourse(cur);
         return "hourse/hourse";
     }
