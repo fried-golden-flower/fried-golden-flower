@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 @Controller
@@ -27,6 +28,7 @@ public class UserController {
 
     /**
      * 发送邮箱验证码
+     *
      * @param userDTO
      * @return
      */
@@ -40,6 +42,7 @@ public class UserController {
 
     /**
      * 校验验证码
+     *
      * @param userDTO
      * @return
      */
@@ -52,28 +55,31 @@ public class UserController {
 
     /**
      * 登录
+     *
      * @param userDTO
      * @return
      */
     @PostMapping("/login")
-    public String login(@RequestBody UserDTO userDTO, Model model) {
+    public String login(UserDTO userDTO, Model model, HttpServletRequest request) {
         LOGGER.info("login..." + userDTO);
         Result result = userService.login(userDTO);
-        model.addAttribute("result",result);
-        if(result.getSuccess()){
+        model.addAttribute("result", result);
+        if (result.getSuccess()) {
             User user = (User) result.getContent();
-            if(!Objects.isNull(user.getCurHourse())){
+            request.getSession().setAttribute("loginUser", user);
+            if (!Objects.isNull(user.getCurHourse())) {
                 return "hourse/hourse";
-            }else{
+            } else {
                 return "index";
             }
-        }else{
+        } else {
             return "login";
         }
     }
 
     /**
      * 注册
+     *
      * @param userDTO
      * @return
      */
@@ -83,10 +89,10 @@ public class UserController {
         LOGGER.info("register..." + userDTO);
         Result result = userService.register(userDTO);
         LOGGER.info(result.toString());
-        if(result.getSuccess()){
+        if (result.getSuccess()) {
             return "login";
-        }else{
-            model.addAttribute("result",result);
+        } else {
+            model.addAttribute("result", result);
             return "register";
         }
     }

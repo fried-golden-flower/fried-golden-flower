@@ -1,7 +1,10 @@
 package com.example.friedgoldenflower.common;
 
+import com.example.friedgoldenflower.common.interceptor.LoginHandlerInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -9,8 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer {
 
+    @Autowired
+    private LoginHandlerInterceptor loginHandlerInterceptor;
+
     @Bean
-    public WebMvcConfigurer webMvcConfigurer(){
+    public WebMvcConfigurer webMvcConfigurer() {
         WebMvcConfigurer webMvcConfigurer = new WebMvcConfigurer() {
             @Override
             public void addViewControllers(ViewControllerRegistry registry) {
@@ -25,6 +31,11 @@ public class MvcConfiguration implements WebMvcConfigurer {
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
                 registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/**");
                 registry.addResourceHandler("/*.html").addResourceLocations("classpath:/templates/*.html");
+            }
+
+            @Override
+            public void addInterceptors(InterceptorRegistry registry) {
+                registry.addInterceptor(loginHandlerInterceptor).addPathPatterns("/hourse/**");
             }
         };
         return webMvcConfigurer;

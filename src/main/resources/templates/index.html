@@ -33,9 +33,9 @@
     <br/><br/>
     <button style="width: 100px;height: 50px" id="join-hourse" onclick="joinHourse()">加入房间</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-    <form id="ch-ff" action="@{/hourse/createHourse}">
+    <form id="ch-ff"  method="get" th:action="@{/hourse/createHourse}">
     </form>
-    <form id="jh-ff" action="@{/hourse/joinHourse}">
+    <form id="jh-ff" th:action="@{/hourse/joinHourse}" method="get">
     </form>
 
     <div id="my_modal" style="border: 1px solid #000;position: fixed;top: 50%;left: 50%;transform: translate(-50%,-50%); display: none;">
@@ -76,7 +76,7 @@
         let myClose=document.getElementsByClassName('my_close')[0]
         console.log(myClose);
         function createHourse() {
-            $("#ch-ff").submit();
+            $('#ch-ff').submit();
         }
         function joinHourse() {
             //加入房间 弹出框

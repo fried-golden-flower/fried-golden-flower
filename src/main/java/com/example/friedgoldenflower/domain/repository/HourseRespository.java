@@ -8,5 +8,6 @@ public interface HourseRespository {
      * 创建房间
      * @return
      */
-    public Hourse createHourse(Hourse hourse);
+    public Integer createHourse(Hourse hourse);
+
 }

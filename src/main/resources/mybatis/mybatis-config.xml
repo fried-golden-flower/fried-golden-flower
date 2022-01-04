@@ -13,5 +13,7 @@
     <typeAliases>
         <!--        别名-->
         <typeAlias alias="RegisterCode" type="com.example.friedgoldenflower.domain.entity.RegisterCode"/>
+        <typeAlias alias="Hourse" type="com.example.friedgoldenflower.domain.entity.Hourse"/>
+        <typeAlias alias="User" type="com.example.friedgoldenflower.domain.entity.User"/>
     </typeAliases>
 </configuration>
