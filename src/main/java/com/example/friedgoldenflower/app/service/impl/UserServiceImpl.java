@@ -117,17 +117,18 @@ public class UserServiceImpl implements UserService {
         Result result = new Result();
         if(ObjectUtils.isEmpty(userDTO.getUserName())){
             result.setSuccess(false);
-            result.setContent("用户名不能为空");
+            result.setMsg("用户名不能为空");
             return result;
         }
         if(ObjectUtils.isEmpty(userDTO.getPassword())){
             result.setSuccess(false);
-            result.setContent("密码不能为空");
+            result.setMsg("密码不能为空");
             return result;
         }
         User user = userRepository.login(userDTO);
         result.setSuccess(true);
         result.setContent(user);
+        result.setMsg("登录成功");
         return result;
     }
 

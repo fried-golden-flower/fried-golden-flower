@@ -3,12 +3,14 @@ package com.example.friedgoldenflower.infra.mapper;
 import com.example.friedgoldenflower.api.dto.UserDTO;
 import com.example.friedgoldenflower.domain.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserMapper {
 
     /**
      * 查询用户信息
+     *
      * @param userDTO
      * @return
      */
@@ -16,6 +18,7 @@ public interface UserMapper {
 
     /**
      * 注册用户-插入
+     *
      * @param userDTO
      * @return
      */
@@ -23,8 +26,14 @@ public interface UserMapper {
 
     /**
      * 登录用户
+     *
      * @param userDTO
      * @return
      */
     User login(UserDTO userDTO);
+
+    Integer updateUserCurHourse(@Param("hourseId") Long hourseId, @Param("userId") Long userId);
+
+    User selectUserById(Long userId);
+
 }

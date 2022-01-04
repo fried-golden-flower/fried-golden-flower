@@ -68,7 +68,7 @@ public class UserController {
             User user = (User) result.getContent();
             request.getSession().setAttribute("loginUser", user);
             if (!Objects.isNull(user.getCurHourse())) {
-                return "hourse/hourse";
+                return "redirect:/hourse";
             } else {
                 return "index";
             }

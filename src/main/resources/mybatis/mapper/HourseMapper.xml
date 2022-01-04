@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.friedgoldenflower.infra.mapper.HourseMapper">
     <sql id="queryFields">
-        id,email,code,create_time
+        id,hourse_name,hourse_code,create_time,create_user,hourse_user
     </sql>
     <sql id="insertFields">
         hourse_name,hourse_code,create_time,create_user,hourse_user
@@ -13,5 +13,10 @@
     <insert id="createHourse" parameterType="Hourse" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into hourse(<include refid="insertFields"></include>) values(#{hourseName},#{hourseCode},#{createTime},#{createUser},#{hourseUser})
     </insert>
+    <select id="selectHourseById" resultType="com.example.friedgoldenflower.domain.entity.Hourse">
+        select <include refid="queryFields"></include>
+        from hourse
+        where id = #{id}
+    </select>
 
 </mapper>

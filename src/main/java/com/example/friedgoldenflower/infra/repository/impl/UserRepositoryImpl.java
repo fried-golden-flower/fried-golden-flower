@@ -19,7 +19,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User selectUserByEmail(String email) {
-        if(ObjectUtils.isEmpty(email)){
+        if (ObjectUtils.isEmpty(email)) {
             return null;
         }
         UserDTO userDTO = new UserDTO();
@@ -35,5 +35,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User login(UserDTO userDTO) {
         return userMapper.login(userDTO);
+    }
+
+    @Override
+    public Integer updateUserCurHourse(Long hourseId, Long userId) {
+        return userMapper.updateUserCurHourse(hourseId, userId);
     }
 }

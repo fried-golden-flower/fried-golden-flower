@@ -51,10 +51,10 @@
         // var result = [[${result}]] --会转义
         var result = [(${result})]; //--原样输出
         console.log(result);
-        if(result.success==true){
-            success_prompt(result.content);
-        }else{
-            warning_prompt(result.content);
+        if (result.success == true) {
+            success_prompt(result.msg);
+        } else {
+            warning_prompt(result.msg);
         }
         $.extend($.fn.validatebox.defaults.rules, {
             confirmPass: {

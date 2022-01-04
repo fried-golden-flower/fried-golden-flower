@@ -2,18 +2,48 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>游戏房间[(result.hourseCode)]</title>
     <script th:src="@{/js/jquery-2.1.4.min.js}"></script>
-    <script src="@{js/poker.min.js}"></script>
+    <script th:src="@{/js/poker.min.js}"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/customprompt.js}" src="js/customprompt.js"></script>
+    <style>
+        .alert-pormpt {
+        // 自定义提示框样式 background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+        }
+    </style>
+    <script>
+    </script>
+    <title>[(${result.content.hourseName})]</title>
 </head>
 <body>
+    <h4>房间号: [(${result.content.hourseCode})]</h4>
     <b><span id="total">我的积分:<span/>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button onclick="start()">开始</button>
     <br/><br/>
 
     <div id="container4">
     </div>
+
+    <script>
+        var result = [(${result})]
+        console.log(result);
+        if (result.success == true) {
+            success_prompt(result.msg);
+        } else {
+            warning_prompt(result.msg);
+        }
+         for (var i=0;i<10;i++){
+             var container4 = document.getElementById("container4");
+             var h1 = document.createElement("h5");
+             h1.innerText="玩家"+i+"";
+             h1.className = "player";
+             container4.appendChild(h1);
+         }
+    </script>
     <script>
          function createPlayers(players) {
              console.log(players.length);
@@ -81,14 +111,6 @@
                     createPlayers(data);
                 }
             });
-        }
-
-        for (var i=0;i<10;i++){
-            var container4 = document.getElementById("container4");
-            var h1 = document.createElement("h5");
-            h1.innerText="玩家"+i+"";
-            h1.className = "player";
-            container4.appendChild(h1);
         }
     </script>
 

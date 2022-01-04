@@ -1,6 +1,7 @@
 package com.example.friedgoldenflower.domain.entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -22,6 +23,7 @@ public class Hourse {
     /**
      * 创建时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -33,4 +35,16 @@ public class Hourse {
      * 当前房间的用户id: id1,id2,id3..
      */
     private String hourseUser;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id:" + id +
+                ", hourseName: '" + hourseName + '\'' +
+                ", hourseCode: '" + hourseCode + '\'' +
+                ", createTime: '" + createTime + '\'' +
+                ", createUser: '" + createUser + '\'' +
+                ", hourseUser: '" + hourseUser + '\'' +
+                '}';
+    }
 }

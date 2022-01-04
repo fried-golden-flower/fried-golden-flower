@@ -13,6 +13,10 @@
         insert into user(<include refid="insertFields"></include>)
         values(#{userName},#{password},#{email},null,0)
     </insert>
+    <update id="updateUserCurHourse">
+        update user set cur_hourse = #{hourseId}
+        where id = #{userId}
+    </update>
     <select id="selectUser" resultType="com.example.friedgoldenflower.domain.entity.User"
             parameterType="com.example.friedgoldenflower.api.dto.UserDTO">
         select <include refid="queryFields"></include>
@@ -42,6 +46,10 @@
                 and u.password = #{password}
             </if>
         </where>
+    </select>
+    <select id="selectUserById" resultType="com.example.friedgoldenflower.domain.entity.User">
+        select <include refid="queryFields"></include>
+        from user where id = #{userId}
     </select>
 
 </mapper>

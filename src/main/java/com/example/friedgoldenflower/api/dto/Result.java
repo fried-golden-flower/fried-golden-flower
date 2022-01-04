@@ -13,11 +13,17 @@ public class Result {
      */
     private Object content;
 
+    /**
+     * 消息提示
+     */
+    private String msg;
+
     @Override
     public String toString() {
         return "{" +
                 "success:" + success +
                 ", content:" + content +
-                "}";
+                ", msg:'" + msg +
+                "'}";
     }
 }

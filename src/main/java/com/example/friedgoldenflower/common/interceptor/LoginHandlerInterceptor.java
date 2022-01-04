@@ -26,7 +26,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
             //未登陆，返回登陆界面
             Result result = new Result();
             result.setSuccess(false);
-            result.setContent("'没有权限请先登陆'");
+            result.setMsg("没有权限请先登陆");
             request.setAttribute("result", result);
             request.getRequestDispatcher("/login").forward(request, response);
             return false;

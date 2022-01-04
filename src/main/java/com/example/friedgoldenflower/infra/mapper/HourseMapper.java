@@ -9,5 +9,7 @@ public interface HourseMapper {
      * 创建房间
      * @return
      */
-    public Integer createHourse(Hourse hourse);
+    Integer createHourse(Hourse hourse);
+
+    Hourse selectHourseById(Long id);
 }

@@ -25,4 +25,12 @@ public interface UserRepository {
      * @return
      */
     User login(UserDTO userDTO);
+
+    /**
+     * 更新用户所在的当前房间的ID
+     * @param hourseId 房间id
+     * @param userId 用户id
+     * @return
+     */
+    Integer updateUserCurHourse(Long hourseId, Long userId);
 }

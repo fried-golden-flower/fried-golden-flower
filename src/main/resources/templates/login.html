@@ -16,8 +16,7 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/customprompt.js}" src="js/customprompt.js">
-    </script>
+    <script type="text/javascript" th:src="@{/js/customprompt.js}" src="js/customprompt.js"></script>
     <style>
         .alert-pormpt {
         / / 自定义提示框样式 background: rgba(0, 0, 0, 0.8);
@@ -50,9 +49,9 @@
     var result = [(${result})]
     console.log(result);
     if (result.success == true) {
-        success_prompt(result.content);
+        success_prompt(result.msg);
     } else {
-        warning_prompt(result.content);
+        warning_prompt(result.msg);
     }
     function submitForm() {
         var username = $("#user-name").val();
